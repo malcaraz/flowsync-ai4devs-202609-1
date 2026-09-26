@@ -49,9 +49,10 @@ npm install
 npm run dev       # vite
 npm run build     # tsc -b && vite build
 npm run lint      # oxlint (.oxlintrc.json)
+npm run test:e2e  # Playwright (e2e/), primera vez: npx playwright install chromium
 ```
 
-No hay framework de tests configurado en el frontend.
+Tests e2e con Playwright en `frontend/e2e/`: la API se mockea con `page.route` (no necesitan backend) y levantan su propio Vite en el puerto 5174.
 
 ## Arquitectura del backend
 
