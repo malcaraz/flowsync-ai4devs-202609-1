@@ -1,4 +1,5 @@
 const API_BASE = "/api/v1";
+const REQUEST_TIMEOUT_MS = 10_000;
 
 // Espejo de backend/app/transformers/user_transformer.ts
 export type User = {
@@ -46,6 +47,8 @@ async function request<T>(
       headers,
       body:
         options.body === undefined ? undefined : JSON.stringify(options.body),
+      // Evita que la UI se quede esperando para siempre si el backend no responde
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
   } catch {
     throw new ApiError(0, "No se pudo conectar con el servidor");
@@ -60,6 +63,9 @@ async function request<T>(
   }
 
   // El backend envuelve las respuestas en { data: ... }
+  if (payload?.data === undefined) {
+    throw new ApiError(response.status, "Respuesta inesperada del servidor");
+  }
   return payload.data as T;
 }
 

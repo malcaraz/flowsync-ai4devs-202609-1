@@ -19,7 +19,8 @@ function errorMessage(error: unknown): string {
   if (error instanceof ApiError) {
     if (error.isNetworkError) return "No se pudo conectar con el servidor";
     if (error.status === 400) return "Email o contraseña incorrectos";
-    if (error.status === 422) return error.message;
+    // Los mensajes de VineJS llegan en inglés: se muestra uno propio
+    if (error.status === 422) return "Revisa el email y la contraseña";
   }
   return "Ha ocurrido un error inesperado. Inténtalo de nuevo";
 }
