@@ -49,9 +49,10 @@ npm install
 npm run dev       # vite
 npm run build     # tsc -b && vite build
 npm run lint      # oxlint (.oxlintrc.json)
+npm run test:e2e  # Playwright (e2e/), primera vez: npx playwright install chromium
 ```
 
-No hay framework de tests configurado en el frontend.
+Tests e2e con Playwright en `frontend/e2e/`: la API se mockea con `page.route` (no necesitan backend) y levantan su propio Vite en el puerto 5174.
 
 ## Arquitectura del backend
 
@@ -92,6 +93,8 @@ Signup y login responden `{ data: { user, token } }`.
 commitear directo en `main`/`s1/start`.
 - Al cerrar la tarea: usar la skill `/commit`, luego `gh pr create` con una descripción
 completa de los cambios en el cuerpo del PR.
+- Si el PR toca `frontend/`: usar la skill `/e2e-gif` para incluir en la descripción un GIF
+con la ejecución de los tests e2e. Repetirla si cambian los tests o el código probado.
 - Después de abrir el PR: usar el subagente `adversarial-reviewer` sobre él, antes de
 darlo por terminado.
 - No repitas ese resumen en el chat: la sesión se va a perder, el PR no. Responde solo
