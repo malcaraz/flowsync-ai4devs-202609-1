@@ -70,6 +70,51 @@ test.describe("login", () => {
     await expect(page.getByRole("button", { name: "Entrar" })).toBeEnabled();
   });
 
+  test("bloquea el formulario mientras la petición está en curso", async ({
+    page,
+  }) => {
+    let loginCalls = 0;
+    let release!: () => void;
+    const pending = new Promise<void>((resolve) => (release = resolve));
+
+    await page.route("**/api/v1/auth/login", async (route) => {
+      loginCalls++;
+      await pending;
+      return json(route, 400, {
+        errors: [{ message: "Invalid user credentials" }],
+      });
+    });
+    await page.goto("/");
+
+    await fillAndSubmit(page, "flow@test.dev", "password123");
+
+    const button = page.getByRole("button", { name: "Entrando…" });
+    await expect(button).toBeDisabled();
+    await expect(page.getByLabel("Email")).toBeDisabled();
+    await expect(page.getByLabel("Contraseña")).toBeDisabled();
+    // Un segundo envío (p. ej. Enter) no debe lanzar otra petición
+    await page.getByLabel("Contraseña").press("Enter");
+
+    release();
+    await expect(page.getByRole("alert")).toBeVisible();
+    expect(loginCalls).toBe(1);
+  });
+
+  test("muestra un error genérico ante un fallo del servidor (500)", async ({
+    page,
+  }) => {
+    await page.route("**/api/v1/auth/login", (route) =>
+      json(route, 500, { errors: [{ message: "Internal server error" }] }),
+    );
+    await page.goto("/");
+
+    await fillAndSubmit(page, "flow@test.dev", "password123");
+
+    await expect(page.getByRole("alert")).toHaveText(
+      "Ha ocurrido un error inesperado. Inténtalo de nuevo",
+    );
+  });
+
   test("muestra error en español cuando el backend rechaza la validación (422)", async ({
     page,
   }) => {
@@ -113,6 +158,8 @@ test.describe("login", () => {
   }) => {
     let loginBody: unknown;
     let profileAuth: string | undefined;
+    const consoleOutput: string[] = [];
+    page.on("console", (message) => consoleOutput.push(message.text()));
 
     await page.route("**/api/v1/auth/login", (route) => {
       loginBody = route.request().postDataJSON();
@@ -138,7 +185,10 @@ test.describe("login", () => {
     expect(
       await page.evaluate((key) => localStorage.getItem(key), TOKEN_KEY),
     ).toBe(TOKEN);
-    expect(page.url()).not.toContain(TOKEN);
+    // Ni el token ni la contraseña deben acabar en la consola
+    const logged = consoleOutput.join("\n");
+    expect(logged).not.toContain(TOKEN);
+    expect(logged).not.toContain("password123");
   });
 
   test("mantiene la sesión al recargar si hay token guardado", async ({
@@ -161,13 +211,7 @@ test.describe("login", () => {
     page,
   }) => {
     await page.addInitScript(
-      ([key, token]) => {
-        // Solo en la primera carga, para poder comprobar después que se borró
-        if (!sessionStorage.getItem("seeded")) {
-          localStorage.setItem(key, token);
-          sessionStorage.setItem("seeded", "1");
-        }
-      },
+      ([key, token]) => localStorage.setItem(key, token),
       [TOKEN_KEY, "oat_caducado"] as const,
     );
     await page.route("**/api/v1/account/profile", (route) =>
