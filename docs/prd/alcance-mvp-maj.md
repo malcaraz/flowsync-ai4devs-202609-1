@@ -57,35 +57,62 @@ Una única lista de tareas compartida donde se trabaja de verdad. Actualizar un 
 
 ### NO-alcance
 
-- **"Hace cuánto cambió" en cada tarea.** La decisión que cambia necesita el estado actual, no su antigüedad. Por eso la promesa es "ves en qué está cada uno", no "qué se ha movido".
-- **Editar el título y la fecha.** No ayuda a validar H1, H2 ni H3. Una tarea mal escrita se da por hecha y se crea otra.
-- **Notificaciones push, email, resúmenes y recordatorios de vencimiento.** Interrumpen, y la señal que se busca es la que espera. Además, si alguien actualiza porque le llega un aviso, H1 deja de poder medirse.
-- **Integración con Slack.** Devuelve la conversación al canal de interrupciones que H3 quiere eliminar.
-- **Presencia e indicadores de actividad.** El estado es de la tarea, no de la persona. Sería vigilancia, y se rechaza a propósito.
-- **Roles y permisos.** Los roles son planos. Ninguna hipótesis depende de quién puede hacer qué.
-- **Varios equipos o espacios, entidad "equipo", invitaciones.** H3 se valida con un solo equipo en un solo espacio.
-- **Estado derivado de Git, CI o calendario, e importar tareas de otro gestor.** Es otro producto. Convivir con otra herramienta mediría la doble actualización, no H1.
-- **Sprints, estimaciones, épicas, prioridades, etiquetas y estados configurables.** Son el "rollo" que se quiere quitar. Cada campo o ajuste de más encarece la actualización y juega contra H1.
-- **Analítica e informes.** Nadie los lee: el valor es para los compañeros, no hacia arriba.
-- **Comentarios, descripción, adjuntos, subtareas y dependencias.** Para saber quién está en qué bastan título, responsable y estado (H2).
-- **Estado "bloqueada" y gestión de bloqueos.** Los bloqueos siguen en la daily, y este MVP no los resuelve.
-- **Historial de cambios.** Responde a "¿quién cambió qué?", que no es la decisión que se quiere cambiar.
-- **Borrar o archivar tareas.** No valida nada. Lo que no sirve se da por hecho y se esconde con el filtro.
-- **Varios responsables por tarea.** Rompe la respuesta simple a "¿quién está en esto?" (H2).
-- **Filtrar por responsable.** La ficha fija el filtro por estado. Con 3 a 10 personas, la lista se lee entera.
-- **App móvil y modo offline.** H3 se valida igual en el navegador de escritorio, que es donde se trabaja.
+- **"Hace cuánto cambió" en cada tarea.** H2 se decide con el estado actual, no con su antigüedad. Por eso la promesa es "ves en qué está cada uno", no "qué se ha movido".
+- **Notificaciones push, email, resúmenes, recordatorios e integración con Slack.** Si alguien actualiza porque le llega un aviso, H1 deja de medirse. Y Slack devuelve la conversación al canal de interrupciones que H3 quiere eliminar.
+- **Presencia e indicadores de actividad.** No aportan a H2: lo que evita pisarse es el estado de la tarea, no saber si alguien está conectado. Además sería vigilancia, y se rechaza a propósito.
+- **Roles, permisos, varios equipos o espacios, invitaciones.** H3 se valida con un solo equipo de roles planos en un solo espacio. Ninguna hipótesis depende de quién puede hacer qué.
+- **Estado derivado de Git, CI o calendario, e importar desde otro gestor.** H1 comprueba si la gente teclea su estado. Derivarlo esquiva la prueba, y convivir con otra herramienta mediría la doble actualización.
+- **Sprints, estimaciones, épicas, prioridades, etiquetas y estados configurables.** Cada campo o ajuste de más encarece la actualización y juega contra H1.
+- **Analítica e informes.** H1–H3 se miden en el propio equipo (¿cae la ronda?), no con informes hacia arriba que nadie lee.
+- **Editar título y fecha, comentarios, descripción, adjuntos, subtareas, dependencias y varios responsables.** Para H2 bastan título, responsable y estado. Nada de eso cambia la respuesta a "¿quién está en qué?", y varios responsables la emborronan.
+- **Estado "bloqueada" y gestión de bloqueos.** H3 va de la ronda de "¿en qué estás?". Los bloqueos son otra parte de la daily, y medirlos ensuciaría el criterio de éxito.
+- **Historial de cambios, borrar o archivar.** Ni H1 ni H2 dependen de saber cómo se llegó al estado ni de limpiar la lista. Lo hecho se esconde con el filtro.
+- **Filtrar por responsable.** Con 3 a 10 personas la lista entera ya responde a H2, y la ficha fija el filtro por estado.
+- **App móvil y modo offline.** H1–H3 se validan igual en el navegador.
 
 ---
 
 ## Parte B: las tres líneas
 
-1. **Los dos números:** 9 propuestas por la IA · 6 dentro después del recorte.
+1. **Los dos números:**
+
+    > 9 propuestas introducidas por la IA y 6 propuestas restantes después de mi recorte.
+
 
 2. **Tres cosas que dejé fuera y por qué** (qué hipótesis no ayudan a validar):
-   - **Filtrar por responsable ("mis tareas").** Era mi primera intuición, pero no valida nada: con 3 a 10 personas la lista entera ya responde "¿quién está en qué?" (H2). Filtrar por persona es comodidad de lectura, no una prueba de que la gente mantenga el estado (H1) ni de que caiga la ronda (H3).
-   - **Estado "bloqueada".** Suena razonable, pero H3 va de la ronda de "¿en qué estás?", no de los bloqueos, que siguen en la daily. Meterlo mediría otra parte de la reunión y ensuciaría el criterio de éxito.
-   - **Editar el título y la fecha.** Ni H1, ni H2, ni H3 dependen de corregir una tarea mal escrita. Lo que se valida es cambiar estado y responsable, no el contenido.
 
-3. **La exclusión de la que menos seguro estoy:** "hace cuánto cambió" en cada tarea. Se contradicen el recorte (la ficha no la pide y la decisión solo necesita el estado actual) y el riesgo #1 (sin ese dato, una tarea "en curso" abandonada es indistinguible de una viva, y el estado viejo no se detecta). Entraría si en la semana de prueba aparecen tareas "en curso" que llevan días sin tocarse y el equipo vuelve a preguntar "¿sigues con esto?".
+    Ninguna, inicialmente puse estas tres:
 
-> 📌 **La IA me corrigió y tenía razón.** En mi primera versión de esta parte B excluía crear una tarea con solo el título, las tareas sin responsable y el filtro por estado, y decía que quedaban 3. La revisión adversarial del PR señaló que las tres contradecían la ficha ("sin campos obligatorios", "saber qué está libre", "filtrando por estado") y el propio documento (H2, S2, S5), y que el alcance seguía listando 6. Lo corregí aquí.
+    >
+    >1- "Crear una tarea con solo el título. El responsable y la fecha de vencimiento son opcionales."
+    >
+    > FlowSync trata de eliminar el "¿En que estás?" en la daily. Tener una tarea creada sólo con el título no elimina esta pregunta, "¿En qué estás?" Implica que un desarrollador está trabajando en una tarea. H3
+    >
+    >2- "Poner, cambiar o quitar el responsable. Sin responsable, la tarea está libre. (H2)"
+    >
+    > Mismo planteamiento, si se puede quitar el responsable, la tarea quedaría libre y no sería necesario mostrarla en FlowSync. Sólo queremos tareas asignadas a desarrolladores para cumplir con H3 y responder a la pregunta "¿En qué estás?. Si que permitiría cambiar de usuario.
+    >
+    > Tener una tarea sin asignar a nadie en FlowSync podría dar lugar a la pregunta "¿Y quién está en esta tarea?" en la daily.
+    >
+    >3- "Filtro por estado. (H3)"
+    >
+    > Si se filtra sólo por estado, el listado de tareas podría estar desordenado, interesa saber en que tarea está trabajando cada usuario. H3
+
+    Al final la IA me informó que mis exclusiones chocan con la ficha de hechos y con el propio documento, finalmente no he podido defender mis exclusiones:
+
+    > - Filtro por estado: la ficha dice textualmente "filtrando por estado", y el propio NO-alcance del documento lo da como algo fijado por la ficha.
+    >
+    > - Tareas sin responsable: rompen la idea de "qué está libre", que aparece en la ficha, en la hipótesis H2, en la propuesta de valor y en el supuesto S2.
+    >
+    > - Crear con solo el título: contradice "sin campos obligatorios" y el supuesto S5.
+
+
+3. **La exclusión de la que menos seguro estoy**, y qué tendría que pasar para que entrara:
+
+   - Filtro por estado. (H3)
+
+    Mi primera respuesta fue:
+
+    > Mejor filtrar por Usuario y estado, para ver de forma más clara "¿Quién está con qué?".
+
+    La ficha dice explicitamente que hay que filtrar por estado, pero tras no poder defender mis exclusiones, este apartado queda sin responder.
