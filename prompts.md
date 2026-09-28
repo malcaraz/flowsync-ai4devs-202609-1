@@ -273,3 +273,14 @@ sí, añade H1 y haz commit y push
 ```
 
 **Qué salió:** Añadió *(H1)* al punto 1 del alcance y subió el cambio al PR #48.
+
+## Prompt 21
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+haz commit y push de los últimoc cambios
+```
+
+**Qué salió:** Subió al PR #48 mis retoques de formato en la parte B.

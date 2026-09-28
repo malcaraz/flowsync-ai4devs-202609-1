@@ -100,19 +100,18 @@ Una única lista de tareas compartida donde se trabaja de verdad. Actualizar un 
 
     Al final la IA me informó que mis exclusiones chocan con la ficha de hechos y con el propio documento, finalmente no he podido defender mis exclusiones:
 
-    > - Filtro por estado: la ficha dice textualmente "filtrando por estado", y el propio NO-alcance del documento lo da como algo fijado por la ficha.
+    >Filtro por estado: la ficha dice textualmente "filtrando por estado", y el propio NO-alcance del documento lo da como algo fijado por la ficha.
     >
-    > - Tareas sin responsable: rompen la idea de "qué está libre", que aparece en la ficha, en la hipótesis H2, en la propuesta de valor y en el supuesto S2.
+    >Tareas sin responsable: rompen la idea de "qué está libre", que aparece en la ficha, en la hipótesis H2, en la propuesta de valor y en el supuesto S2.
     >
-    > - Crear con solo el título: contradice "sin campos obligatorios" y el supuesto S5.
+    >Crear con solo el título: contradice "sin campos obligatorios" y el supuesto S5.
 
 
 3. **La exclusión de la que menos seguro estoy**, y qué tendría que pasar para que entrara:
 
-   - Filtro por estado. (H3)
-
     Mi primera respuesta fue:
-
+    > Filtro por estado. (H3)
+    >
     > Mejor filtrar por Usuario y estado, para ver de forma más clara "¿Quién está con qué?".
 
     La ficha dice explicitamente que hay que filtrar por estado, pero tras no poder defender mis exclusiones, este apartado queda sin responder.
