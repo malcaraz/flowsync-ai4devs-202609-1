@@ -48,7 +48,7 @@ Una única lista de tareas compartida donde se trabaja de verdad. Actualizar un 
 
 ### Alcance
 
-1. Crear una tarea con solo el título. El responsable y la fecha de vencimiento son opcionales.
+1. Crear una tarea con solo el título. El responsable y la fecha de vencimiento son opcionales. *(H1)*
 2. Poner, cambiar o quitar el responsable. Sin responsable, la tarea está libre. *(H2)*
 3. Cambiar el estado desde la lista en dos clics como mucho, entre tres estados fijos. *(H1)*
 4. Una lista única compartida con título, responsable, estado y vencimiento, y una marca en lo que se ha pasado de plazo. *(H2, H3)*

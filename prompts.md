@@ -251,3 +251,25 @@ sí, añádelos a prompts.md
 ```
 
 **Qué salió:** Añadió los prompts 13 a 18 a este archivo.
+
+## Prompt 19
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+pasa otra vez el adversarial-reviewer sobre el PR
+```
+
+**Qué salió:** Tercera revisión: nada que rompa la entrega; señaló que mi recorte propio acabó en cero, que la exclusión dudosa está dentro del alcance, la longitud y que al punto 1 del alcance le faltaba su hipótesis.
+
+## Prompt 20
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+sí, añade H1 y haz commit y push
+```
+
+**Qué salió:** Añadió *(H1)* al punto 1 del alcance y subió el cambio al PR #48.
