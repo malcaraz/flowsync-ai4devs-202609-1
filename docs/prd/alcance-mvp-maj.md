@@ -79,30 +79,13 @@ Una única lista de tareas compartida donde se trabaja de verdad. Actualizar un 
 
 ## Parte B: las tres líneas
 
-1. **Los dos números:**
-
-    > 6 propuestas introducidas por la IA y 3 propuestas restantes después de mi recorte.
-
+1. **Los dos números:** 9 propuestas por la IA · 6 dentro después del recorte.
 
 2. **Tres cosas que dejé fuera y por qué** (qué hipótesis no ayudan a validar):
+   - **Filtrar por responsable ("mis tareas").** Era mi primera intuición, pero no valida nada: con 3 a 10 personas la lista entera ya responde "¿quién está en qué?" (H2). Filtrar por persona es comodidad de lectura, no una prueba de que la gente mantenga el estado (H1) ni de que caiga la ronda (H3).
+   - **Estado "bloqueada".** Suena razonable, pero H3 va de la ronda de "¿en qué estás?", no de los bloqueos, que siguen en la daily. Meterlo mediría otra parte de la reunión y ensuciaría el criterio de éxito.
+   - **Editar el título y la fecha.** Ni H1, ni H2, ni H3 dependen de corregir una tarea mal escrita. Lo que se valida es cambiar estado y responsable, no el contenido.
 
-- Crear una tarea con solo el título. El responsable y la fecha de vencimiento son opcionales.
+3. **La exclusión de la que menos seguro estoy:** "hace cuánto cambió" en cada tarea. Se contradicen el recorte (la ficha no la pide y la decisión solo necesita el estado actual) y el riesgo #1 (sin ese dato, una tarea "en curso" abandonada es indistinguible de una viva, y el estado viejo no se detecta). Entraría si en la semana de prueba aparecen tareas "en curso" que llevan días sin tocarse y el equipo vuelve a preguntar "¿sigues con esto?".
 
-    > FlowSync trata de eliminar el "¿En que estás?" en la daily. Tener una tarea creada sólo con el título no elimina esta pregunta, "¿En qué estás?" Implica que un desarrollador está trabajando en una tarea. H3
-
-- Poner, cambiar o quitar el responsable. Sin responsable, la tarea está libre. (H2)
-
-    > Mismo planteamiento, si se puede quitar el responsable, la tarea quedaría libre y no sería necesario mostrarla en FlowSync. Sólo queremos tareas asignadas a desarrolladores para cumplir con H3 y responder a la pregunta "¿En qué estás?. Si que permitiría cambiar de usuario.
-    >
-    > Tener una tarea sin asignar a nadie en FlowSync podría dar lugar a la pregunta "¿Y quién está en esta tarea?" en la daily.
-
-- Filtro por estado. (H3)
-
-    > Si se filtra sólo por estado, el listado de tareas podría estar desordenado, interesa saber en que tarea está trabajando cada usuario. H3
-
-
-3. **La exclusión de la que menos seguro estoy**, y qué tendría que pasar para que entrara:
-
-- Filtro por estado. (H3)
-
-    > Mejor filtrar por Usuario y estado, para ver de forma más clara "¿Quién está con qué?".
+> 📌 **La IA me corrigió y tenía razón.** En mi primera versión de esta parte B excluía crear una tarea con solo el título, las tareas sin responsable y el filtro por estado, y decía que quedaban 3. La revisión adversarial del PR señaló que las tres contradecían la ficha ("sin campos obligatorios", "saber qué está libre", "filtrando por estado") y el propio documento (H2, S2, S5), y que el alcance seguía listando 6. Lo corregí aquí.

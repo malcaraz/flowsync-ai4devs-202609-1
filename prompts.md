@@ -94,3 +94,47 @@ rellena prompts.md con mis prompts
 ```
 
 **Qué salió:** Rellenó este archivo.
+
+## Prompt 7
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+que nivel de esfuerzo tengo configurado para Opus 5.5?
+```
+
+**Qué salió:** Lo sacó de la variable de entorno CLAUDE_EFFORT=medium; avisó de que un cambio con /model no se ve desde ahí.
+
+## Prompt 8
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+sí, ponlo en los 6 bloques
+```
+
+**Qué salió:** Añadió "· medium" al modelo de los 6 bloques.
+
+## Prompt 9
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+Haz el commit a abre el pull request
+```
+
+**Qué salió:** Commit, PR #48 contra s2/start y revisión adversarial: mi parte B contradecía la ficha y el documento (6 en el alcance frente a 3 declarados).
+
+## Prompt 10
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+Revisa la parte B
+```
+
+**Qué salió:** Reescribió la parte B para que case con los 6 puntos del alcance y añadió la nota 📌 sobre la corrección.
