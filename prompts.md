@@ -185,3 +185,69 @@ puedes corregir esto?
 ```
 
 **Qué salió:** Agrupó el NO-alcance de 17 a 12 exclusiones, cada una con su hipótesis; corrigió el Prompt 4 y restauró la cabecera.
+
+## Prompt 13
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+ya he ajustado la parte B, compruébalo de nuevo
+```
+
+**Qué salió:** Confirmó que los números (9 → 6) y la tensión del punto 3 ya cuadran; sugirió no dejar el punto 2 en "Ninguna", concretar el punto 3 y arreglar una sangría.
+
+## Prompt 14
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+toca el punto 3
+```
+
+**Qué salió:** Lo interpretó como el punto 3 de su lista (formato) y solo arregló la sangría del punto 3 de la parte B.
+
+## Prompt 15
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+proponme tres  exclusiones coherentes con mis propuestas en el Punto 2
+```
+
+**Qué salió:** Propuso varios responsables, presencia y estado "bloqueada", justificadas con H2 y H3.
+
+## Prompt 16
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+no, déjalo tal y como esta
+```
+
+**Qué salió:** No tocó la parte B.
+
+## Prompt 17
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+sí, haz el commit y el push
+```
+
+**Qué salió:** Commit cfaf78d subido al PR #48.
+
+## Prompt 18
+
+**Modelo:** Claude Opus 5.5 · medium
+**Herramienta:** Claude Code
+
+```
+sí, añádelos a prompts.md
+```
+
+**Qué salió:** Añadió los prompts 13 a 18 a este archivo.
