@@ -249,6 +249,6 @@ El sistema SHALL cerrar la sesión de la persona cuando pulsa «Cerrar sesión»
 
 - Registro de cuenta: Por contrato es 200, tal y como se dice en la spec, se respeta en el controlador porque es su valor por defecto. Pero debería ser HTTP 201 (Creado), que indica que la solicitud tuvo éxito y, como consecuencia, se ha generado y almacenado un nuevo recurso en el servidor.
 
-- Datos válidos para registrarse: La spec solo se limita a escenarios que devuelven el error 422. y puede generar bugs al no definir la distinción entre mayúsculas y minúsculas en el email o no permitir un límite en el atrubuto fullName.
+- Datos válidos para registrarse: maj@example.com y Maj@example.com se pueden registrar como dos cuentas distintas, y con la segunda no se entra a la primera: o se decidió que el email distinga mayúsculas (`maj@` y `Maj@` son identificadores distintos), o falta normalizarlo a minúsculas, hoy se pueden duplicar cuentas de la misma persona. Ninguna regla ni comentario dice cuál de las dos se buscaba.
 
-- Inicio de sesión: La spec no tiene en cuenta la distinción entre mayúsculas y minúsculas y los tokens de sesión no caducan.
+- Inicio de sesión: Un token sigue valiendo indefinidamente y cada inicio de sesión suma uno nuevo, pero la pantalla dice «Tu sesión ha caducado. Vuelve a iniciar sesión.» cuando el servidor rechaza un token: o falta implementar la caducidad y el mensaje anticipa el comportamiento previsto, o los tokens eternos son lo decidido y el mensaje está mal escrito (en realidad la sesión se cerró o se invalidó, no caducó).

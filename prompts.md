@@ -138,3 +138,47 @@ revisa la entrega
 ```
 
 **Qué salió:** revisó la entrega contra el README: faltaba commitear la Parte B, abrir el PR contra el repo del curso y había dos errores de dato en mis listas (mayúsculas en el email, 7 → 8), que le pedí corregir solo en eso.
+
+## Prompt 12
+
+**Modelo:** Opus 5.5
+**Herramienta:** Claude Code
+
+```
+ves correcto el ejercicio entregado?
+```
+
+**Qué salió:** me dio el visto bueno a lo obligatorio, pero me señaló que la lista 3 era floja (solo una entrada planteaba dos lecturas) y que a la lista 2 le faltaba el «dónde se ve».
+
+## Prompt 13
+
+**Modelo:** Opus 5.5
+**Herramienta:** Claude Code
+
+```
+propón cómo reformular la lista 3
+```
+
+**Qué salió:** me propuso una formulación por tema (lectura A / lectura B); reescribí dos entradas a partir de ella.
+
+## Prompt 14
+
+**Modelo:** Opus 5.5
+**Herramienta:** Claude Code
+
+```
+ves correcto el ejercicio entregado?
+```
+
+**Qué salió:** me avisó de que mis cambios no estaban commiteados, que la entrada 2 de la lista 3 había quedado duplicada y mal planteada, y que faltaban prompts.
+
+## Prompt 15
+
+**Modelo:** Opus 5.5
+**Herramienta:** Claude Code
+
+```
+sí, añade los prompts y actualiza el PR, corrige también la entrada 2 de la lista 3
+```
+
+**Qué salió:** corrigió la entrada 2, añadió los prompts 12–15 y actualizó el PR.
