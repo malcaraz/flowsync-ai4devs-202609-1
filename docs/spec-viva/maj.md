@@ -18,7 +18,7 @@ El sistema SHALL crear una cuenta nueva cuando recibe `POST /api/v1/auth/signup`
 - **THEN** la respuesta es 200 y `user.fullName` es `null`
 
 ### Requirement: Datos válidos para registrarse
-El sistema SHALL rechazar con 422 un registro cuyos datos no sean válidos, con un cuerpo `{ "errors": [{ "message", "rule", "field" }] }` que indica qué campo falla y por qué regla.
+El sistema SHALL rechazar con 422 un registro cuyos datos no sean válidos, con un cuerpo `{ "errors": [{ "message", "rule", "field" }] }` que indica qué campo falla y por qué regla (en las reglas de longitud y de confirmación, cada error trae además `meta` con el límite o el campo con el que se compara).
 
 #### Scenario: Email ya registrado
 - **WHEN** ya existe una cuenta con `ada@example.com` y se envía un registro con ese mismo email
@@ -77,7 +77,7 @@ El sistema SHALL representar al usuario en todas las respuestas con exactamente 
 - **THEN** el objeto tiene esos seis campos y ninguno contiene la contraseña
 
 ### Requirement: Iniciales
-El sistema SHALL calcular `initials` en mayúsculas: con un nombre de dos o más palabras, la primera letra de las dos primeras; con un nombre de una sola palabra, sus dos primeras letras; sin nombre, la primera letra de lo que va antes de la `@` del email y la primera de lo que va después.
+El sistema SHALL calcular `initials` en mayúsculas: con un nombre de dos o más palabras separadas por un único espacio, la primera letra de las dos primeras; con un nombre de una sola palabra, sus dos primeras letras (o la única, si solo tiene una); sin nombre, la primera letra de lo que va antes de la `@` del email y la primera de lo que va después.
 
 #### Scenario: Nombre de dos palabras
 - **WHEN** el usuario se llama `Ada Lovelace`
@@ -222,7 +222,7 @@ El sistema SHALL cerrar la sesión de la persona cuando pulsa «Cerrar sesión»
 
 #### Scenario: Cierre normal
 - **WHEN** una persona con la sesión abierta pulsa «Cerrar sesión»
-- **THEN** el botón muestra «Cerrando sesión…», la persona acaba en `/login` sin aviso y, si después escribe `/profile`, vuelve a `/login`
+- **THEN** la persona acaba en `/login` sin aviso, sin esperar la respuesta del servidor, y, si después escribe `/profile`, vuelve a `/login`
 
 #### Scenario: Cierre con el servidor caído
 - **WHEN** una persona pulsa «Cerrar sesión» mientras el servidor no responde
