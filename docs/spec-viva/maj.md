@@ -239,11 +239,11 @@ El sistema SHALL cerrar la sesión de la persona cuando pulsa «Cerrar sesión»
 
 ### 2. Incoherencias que aparecieron al escribirla
 
-- Registro de cuenta: la spec dice 200, y el controlador no fija ningún código de estado, así que se queda el 200 por defecto.
+- Registro de cuenta: la spec dice 200, y el controlador no fija ningún código de estado, así que se queda el 200 por defecto. Dónde se ve: respuesta de `POST /api/v1/auth/signup`, que devuelve 200 al crear la cuenta.
 
-- Datos válidos para registrarse: El email distingue mayúsculas y minúsculas, fullName sin longitud máxima. Si password y passwordConfirmation son iguales pero tienen menos de 8 caracteres, el error de validación sale dos veces.
+- Datos válidos para registrarse: El email distingue mayúsculas y minúsculas, fullName sin longitud máxima. Si password y passwordConfirmation son iguales pero tienen menos de 8 caracteres, el error de validación sale dos veces. Dónde se ve: `POST /api/v1/auth/signup` con `Maj@example.com` tras registrar `maj@example.com` → 200 y otra cuenta; con un `fullName` de miles de caracteres → 200; con `password` y `passwordConfirmation` iguales de 7 caracteres → 422 con un error `minLength` en cada campo, y en `/register` el aviso sale bajo «Contraseña» y bajo «Repite la contraseña».
 
-- Inicio de sesión: El email distingue mayúsculas y minúsculas y cada inicio de sesión acumula un token nuevo que no caduca.
+- Inicio de sesión: El email distingue mayúsculas y minúsculas y cada inicio de sesión acumula un token nuevo que no caduca. Dónde se ve: `POST /api/v1/auth/login` con `Maj@example.com` para la cuenta `maj@example.com` → 400; dos `POST /api/v1/auth/login` seguidos devuelven dos tokens distintos y ambos dan 200 en `GET /api/v1/account/profile`.
 
 ### 3. Lo que no supe decidir si era un bug o el contrato
 

@@ -182,3 +182,25 @@ sí, añade los prompts y actualiza el PR, corrige también la entrada 2 de la l
 ```
 
 **Qué salió:** corrigió la entrada 2, añadió los prompts 12–15 y actualizó el PR.
+
+## Prompt 16
+
+**Modelo:** Opus 5.5
+**Herramienta:** Claude Code
+
+```
+ves correcto el ejercicio entregado?
+```
+
+**Qué salió:** lo dio por correcto y completo; pendiente añadir ese prompt y, opcional, el «dónde se ve» de la lista 2.
+
+## Prompt 17
+
+**Modelo:** Opus 5.5
+**Herramienta:** Claude Code
+
+```
+añade este último prompt y actualiza el PR, añade también el "dónde se ve" en la lista 2
+```
+
+**Qué salió:** añadió el «dónde se ve» a cada línea de la lista 2, los prompts 16–17 y actualizó el PR.
