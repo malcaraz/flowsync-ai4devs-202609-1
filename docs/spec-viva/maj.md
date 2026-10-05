@@ -235,12 +235,20 @@ El sistema SHALL cerrar la sesión de la persona cuando pulsa «Cerrar sesión»
 ### 1. Requisitos escritos y comprobados
 
 - Escritos por el agente: 18
-- Comprobados por mí abriendo el código: __
+- Comprobados por mí abriendo el código: 3
 
 ### 2. Incoherencias que aparecieron al escribirla
 
-- 
+- Registro de cuenta: la spec dice 200, y el controlador no fija ningún código de estado, así que se queda el 200 por defecto.
+
+- Datos válidos para registrarse: El email distingue mayúsculas y minúsculas, fullName sin longitud máxima. Si password y passwordConfirmation son iguales pero tienen menos de 8 caracteres, el error de validación sale dos veces.
+
+- Inicio de sesión: El email distingue mayúsculas y minúsculas y cada inicio de sesión acumula un token nuevo que no caduca.
 
 ### 3. Lo que no supe decidir si era un bug o el contrato
 
-- 
+- Registro de cuenta: Por contrato es 200, tal y como se dice en la spec, se respeta en el controlador porque es su valor por defecto. Pero debería ser HTTP 201 (Creado), que indica que la solicitud tuvo éxito y, como consecuencia, se ha generado y almacenado un nuevo recurso en el servidor.
+
+- Datos válidos para registrarse: La spec solo se limita a escenarios que devuelven el error 422. y puede generar bugs al no definir la distinción entre mayúsculas y minúsculas en el email o no permitir un límite en el atrubuto fullName.
+
+- Inicio de sesión: La spec no tiene en cuenta la distinción entre mayúsculas y minúsculas y los tokens de sesión no caducan.

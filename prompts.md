@@ -127,3 +127,14 @@ genera el fichero prompts.m tay y como se especifica en la entrega
 ```
 
 **Qué salió:** generó este archivo.
+
+## Prompt 11
+
+**Modelo:** Opus 5.5
+**Herramienta:** Claude Code
+
+```
+revisa la entrega
+```
+
+**Qué salió:** revisó la entrega contra el README: faltaba commitear la Parte B, abrir el PR contra el repo del curso y había dos errores de dato en mis listas (mayúsculas en el email, 7 → 8), que le pedí corregir solo en eso.
