@@ -69,15 +69,20 @@ test.group('Tasks | responsable', (group) => {
     suelta.assertStatus(200)
     lista.assertStatus(200)
 
-    const tareas = lista.body().data as Array<{ id: number; assignee: object }>
+    const tareas = lista.body().data as Array<{ id: number; assignee: Record<string, unknown> }>
     const enLista = tareas.find((t) => t.id === tarea.id)!
     assert.exists(enLista)
 
     for (const responsable of [suelta.body().data.assignee, enLista.assignee]) {
+      // Que no traiga el email no vale si no trae nada: el responsable sigue
+      // siendo identificable.
+      assert.equal(responsable.fullName, 'Ada Lovelace')
+      assert.equal(responsable.initials, 'AL')
+
       assert.notProperty(responsable, 'email')
       assert.notProperty(responsable, 'password')
       // Ni bajo otro nombre: el email no aparece en ningún valor del responsable.
-      assert.notInclude(JSON.stringify(responsable), 'ada@example.com')
+      assert.notInclude(JSON.stringify(responsable).toLowerCase(), 'ada@example.com')
     }
   })
 
@@ -97,6 +102,9 @@ test.group('Tasks | responsable', (group) => {
 
     const responsable = response.body().data.assignee
     assert.isNull(responsable.fullName)
+    // Sin nombre, las iniciales salen del email (regla de auth), pero el email
+    // en sí no llega: la interfaz lo representa sin recurrir a él.
     assert.equal(responsable.initials, 'AE')
+    assert.notProperty(responsable, 'email')
   })
 })

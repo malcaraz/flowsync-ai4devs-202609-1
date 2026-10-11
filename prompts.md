@@ -204,3 +204,69 @@ revisa la tarea de nuevo
 ```
 
 **Qué salió:** Encontró un error de tipos en el test que escribió y lo corrigió sin cambiar lo que afirma; el test sigue en rojo.
+
+## Prompt 18
+
+**Modelo:** Opus 5.5 (`claude-opus-5-5`)
+**Herramienta:** Claude Code
+
+```
+si, haz el commit, push y el PR
+```
+
+**Qué salió:** Hizo el commit y el push al fork; el PR no se pudo abrir porque `gh` no estaba instalado.
+
+## Prompt 19
+
+**Modelo:** Opus 5.5 (`claude-opus-5-5`)
+**Herramienta:** Claude Code
+
+```
+puedes continuar con el PR?
+```
+
+**Qué salió:** Esperó a que se instalase `gh`; faltaba iniciar sesión en GitHub.
+
+## Prompt 20
+
+**Modelo:** Opus 5.5 (`claude-opus-5-5`)
+**Herramienta:** Claude Code
+
+```
+puedes continuar con el PR?
+```
+
+**Qué salió:** `gh auth login` se quedó esperando la autorización en el navegador; lo paré.
+
+## Prompt 21
+
+**Modelo:** Opus 5.5 (`claude-opus-5-5`)
+**Herramienta:** Claude Code
+
+```
+para
+```
+
+**Qué salió:** Paró.
+
+## Prompt 22
+
+**Modelo:** Opus 5.5 (`claude-opus-5-5`)
+**Herramienta:** Claude Code
+
+```
+pasa el revisor adversarial
+```
+
+**Qué salió:** Lanzó el subagente `adversarial-reviewer` sobre el commit (sin PR abierto). Nada bloqueante; dos debilidades en los tests y dudas sobre mi línea 2 y el «no lo sé».
+
+## Prompt 23
+
+**Modelo:** Opus 5.5 (`claude-opus-5-5`)
+**Herramienta:** Claude Code
+
+```
+vale, refuerza los tests
+```
+
+**Qué salió:** El test 2 ahora exige nombre e iniciales además de la ausencia del email, y el test 3 comprueba que el email no llega. Sigue el mismo rojo.
