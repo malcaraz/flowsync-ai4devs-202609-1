@@ -45,8 +45,11 @@ Ver `proposal.md` — Why. El backend (AdonisJS 7 + Lucid 22 + SQLite) solo tien
 - **`update`**: `Task.findOrFail(params.id)` (→ `404`) → `validateUsing(updateTaskValidator)` → `merge` de los campos presentes → `save` → `load('assignee')`. Sin comprobación de propiedad: cualquiera puede actualizar cualquier tarea. `title` no está en el validador, así que se ignora.
   - Cuerpo vacío o sin campos reconocidos: responde `200` con la tarea sin cambios. *Alternativa descartada*: exigir al menos un campo con `422` — añade una regla a medida sin caso de uso en la interfaz.
 - **Validadores** (`app/validators/task.ts`, `vine.create`):
-  - `createTaskValidator`: `title: vine.string().trim().maxLength(255)`. Vacío o solo espacios llegan como `null` desde el bodyparser y fallan con `required`; el `.trim()` explícito deja la regla correcta aunque cambie la configuración del bodyparser.
-  - `updateTaskValidator`: `status: vine.enum(TASK_STATUSES).optional()`, `assigneeId: vine.number().withoutDecimals().exists({ table: 'users', column: 'id' }).optional()`.
+  - `createTaskValidator`: `title: vine.string().trim().minLength(1).maxLength(255)`. Hoy vacío o solo espacios llegan como `null` desde el bodyparser y fallan con `required`. `required` de VineJS solo salta con `null`/`undefined`, así que `.trim().minLength(1)` es la red real: si el bodyparser dejara de normalizar, `"   "` fallaría con `minLength` en vez de crearse una tarea sin título.
+  - `updateTaskValidator`: con `present = (field) => Object.hasOwn(field.parent, field.name)`:
+    - `status: vine.enum(TASK_STATUSES).optional().requiredWhen(present)`
+    - `assigneeId: vine.number({ strict: true }).withoutDecimals().exists({ table: 'users', column: 'id' }).optional().requiredWhen(present)`
+    - Motivo (verificado ejecutando VineJS): `.optional()` a secas deja pasar `null`, y el bodyparser convierte `""` en `null`, así que `status: ""` o `status: null` acabarían en un `200` sin cambios. Con `requiredWhen(present)` un campo ausente se ignora, pero uno presente con `null`/`""` da `422 required`. `strict: true` evita que `true` o `"2"` se coerzan a número.
 - **`TaskTransformer`**: `{ id, title, status, assignee: { id, fullName } }`. El responsable se construye a mano con `pick(assignee, ['id', 'fullName'])` en lugar de reutilizar `UserTransformer`, que expone email, iniciales y fechas. Esta es la frontera de privacidad que pide la nota de E3-1.
 - **Códigos**: creación responde `200` (como `signup`), no `201`, por coherencia con el resto de la API.
 
@@ -58,7 +61,7 @@ Ver `proposal.md` — Why. El backend (AdonisJS 7 + Lucid 22 + SQLite) solo tien
 - **Página `pages/tasks-page.tsx`**, con la estructura visual del perfil (`Card` centrada, más ancha):
   - Cabecera "Tareas del equipo" con enlace "Mi perfil" → `/profile`.
   - Formulario de una línea: `Label` + `Input` de título (sin atributo `maxLength`, para que el aviso salga del servidor en lugar de recortar al teclear) + `Button` "Crear tarea". Usa `useAuthForm(['title'])` para el estado de envío y los errores por campo. Ese hook no tiene nada de auth salvo el nombre. *Alternativa descartada*: duplicarlo como `useTaskForm`.
-  - Al crear: se añade la tarea devuelta **al final** del array local (no reordena) y se vacía el campo.
+  - Al crear: se añade la tarea devuelta **al final** del array local y se vacía el campo. No es una regla de orden: es la forma de mostrarla sin recargar mientras PA-3 siga abierto, y coincide con lo que devuelve hoy la lista al recargar.
   - Carga inicial: `listTasks` al montar, con `FullScreenLoader` mientras llega y `Alert` si falla.
   - Lista vacía: texto que explica la lista ("Aquí verá todo el equipo en qué está cada uno…") e invita a crear la primera con el campo de arriba.
   - Fila: título, responsable (`fullName ?? 'Sin nombre'`) y un grupo de tres `Button size="xs"`: el actual en `variant="default"` con `aria-pressed`, los otros en `outline`. *Alternativa descartada*: un `<select>` nativo — cuesta dos interacciones y desentona con `components/ui`.
@@ -73,6 +76,7 @@ Ver `proposal.md` — Why. El backend (AdonisJS 7 + Lucid 22 + SQLite) solo tien
 - [Dos personas cambian la misma tarea casi a la vez] → Gana la última escritura. La lista no se refresca sola (E3-2 fuera de alcance), así que cada persona ve su última acción hasta recargar.
 - [Reasignación solo por API] → Nadie puede reasignar desde la interfaz hasta RF-10. Es una decisión explícita del proposal.
 - [`useAuthForm` reutilizado fuera de auth] → Acopla por nombre; si crece, se renombra en un change aparte.
+- [La reasignación por API permite averiguar nombres: `PATCH { assigneeId: N }` responde `422` si el id no existe y, si existe, devuelve su `fullName`, de modo que recorriendo ids se obtienen los nombres del equipo] → Se acepta: cualquier persona con sesión ya ve en la lista los nombres de quien tiene tareas, el email nunca se expone y la restricción de que cualquiera reasigne cualquier tarea es explícita. Si se considera un problema, el listado de personas de RF-10 obliga a revisarlo igualmente.
 - [Un `401` en la página de tareas (token revocado en otra pestaña)] → Se muestra "Tu sesión ha caducado. Vuelve a iniciar sesión." en el aviso; la persona recarga y el arranque de la app la lleva al login. No se añade cierre automático de sesión en este change.
 
 ## Migration Plan

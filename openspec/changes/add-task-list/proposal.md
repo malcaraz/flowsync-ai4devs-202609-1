@@ -30,7 +30,7 @@ FlowSync existe para que un equipo sepa «quién está en qué» sin preguntar, 
 
 ## Open Points
 
-- **Orden de la lista (PA-3)**: no hay regla decidida. La API no ordena explícitamente y la pantalla respeta el orden recibido; una tarea recién creada se añade al final de la vista. Mientras no se decida, la promesa de «enumerar el trabajo de cada persona» (E3-1 CA-5) depende de recorrer la lista entera.
+- **Orden de la lista (PA-3)**: no hay regla decidida. La API no ordena explícitamente y la pantalla respeta el orden recibido. Para mostrar sin recargar una tarea recién creada, la vista la añade al final: es una consecuencia de no tener regla, no una regla. Mientras no se decida, la promesa de «enumerar el trabajo de cada persona» (E3-1 CA-5) depende de recorrer la lista entera.
 - **Transiciones de estado (PA-7)**: se adoptan transiciones libres para que deshacer un «Hecho» por error cueste lo mismo que cometerlo. Queda abierto si hace falta algo más.
 - **Límite del título (PA-9)**: se fija en 255 caracteres como decisión provisional de este change.
 - **Reasignación en pantalla (RF-10)**: solo existe por API; elegir persona en la interfaz necesita un listado de personas que este change no expone.

@@ -101,6 +101,10 @@ El sistema SHALL admitir para una tarea únicamente los estados `pending`, `in_p
 - **WHEN** se intenta actualizar una tarea con `status: "Hecho"` o `status: "pendiente"`
 - **THEN** la respuesta es `422` y la tarea no cambia
 
+#### Scenario: Estado vacío o nulo
+- **WHEN** se intenta actualizar una tarea con `status: ""` o `status: null`
+- **THEN** la respuesta es `422` con un error de regla `required` sobre `status` y la tarea no cambia
+
 ### Requirement: Actualización de estado y responsable
 El sistema SHALL aceptar `PATCH /api/v1/tasks/:id` con `status` y/o `assigneeId`, aplicar los campos presentes a la tarea indicada sea quien sea su responsable, y responder `200` con `{ "data": <tarea actualizada> }`; cualquier otro campo, incluido `title`, SHALL ignorarse.
 
@@ -119,6 +123,14 @@ El sistema SHALL aceptar `PATCH /api/v1/tasks/:id` con `status` y/o `assigneeId`
 #### Scenario: Responsable inexistente
 - **WHEN** se envía `assigneeId` con un id que no corresponde a ninguna cuenta
 - **THEN** la respuesta es `422` con un error de regla `database.exists` sobre `assigneeId` y la tarea no cambia
+
+#### Scenario: Responsable no válido
+- **WHEN** se envía `assigneeId` con `null`, `""`, un texto o un booleano
+- **THEN** la respuesta es `422` sobre `assigneeId` y la tarea no cambia
+
+#### Scenario: Cuerpo sin campos reconocidos
+- **WHEN** el cuerpo está vacío o solo trae campos que no son `status` ni `assigneeId`
+- **THEN** la respuesta es `200` con la tarea sin ningún cambio
 
 #### Scenario: El título no se edita
 - **WHEN** el cuerpo incluye `title`
@@ -146,6 +158,14 @@ La aplicación web SHALL mostrar en `/tasks`, a cualquier persona con sesión, u
 #### Scenario: Una sola vista
 - **WHEN** la persona busca otras vistas de tareas en la aplicación
 - **THEN** no existe ninguna vista «mis tareas» ni filtro por persona: solo la lista del equipo
+
+#### Scenario: Carga de la lista
+- **WHEN** la persona abre la lista
+- **THEN** ve un indicador de carga hasta que llegan las tareas
+
+#### Scenario: Fallo al cargar la lista
+- **WHEN** la persona abre la lista y el servidor no responde
+- **THEN** aparece el aviso "No se pudo conectar con el servidor. Comprueba que el backend está arrancado." en lugar de la lista
 
 #### Scenario: Navegación al perfil
 - **WHEN** la persona pulsa el enlace a su perfil desde la lista
