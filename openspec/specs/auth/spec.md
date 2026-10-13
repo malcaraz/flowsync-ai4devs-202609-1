@@ -27,6 +27,10 @@ El sistema SHALL rechazar un registro inválido con `422` y un cuerpo `{ "errors
 - **WHEN** el cuerpo no incluye alguno de `fullName`, `email`, `password` o `passwordConfirmation`
 - **THEN** la respuesta es `422` con un error de regla `required` por cada campo ausente, incluido `fullName` aunque admita `null`
 
+#### Scenario: Campos con texto vacío
+- **WHEN** `email`, `password` o `passwordConfirmation` se envían como `""`
+- **THEN** la respuesta es `422` con un error de regla `required` sobre cada uno, no de longitud ni de formato
+
 #### Scenario: Nombre que no es texto
 - **WHEN** `fullName` es un valor que no es texto ni `null` (por ejemplo, un número)
 - **THEN** la respuesta es `422` con un error de regla `string` sobre `fullName`
@@ -84,8 +88,8 @@ El sistema SHALL rechazar con `422` y el mismo formato de errores por campo un i
 - **THEN** la respuesta es `422` con un error `required` por cada campo ausente
 
 #### Scenario: Email mal formado
-- **WHEN** `email` no es una dirección de email válida
-- **THEN** la respuesta es `422` con un error de regla `email` sobre `email`
+- **WHEN** `email` no es una dirección de email válida o supera los 254 caracteres
+- **THEN** la respuesta es `422` con un error de regla `email` o `maxLength` sobre `email`
 
 #### Scenario: Contraseña corta
 - **WHEN** se envía un email válido con una contraseña de un solo carácter que no es la de la cuenta
@@ -188,14 +192,18 @@ Las pantallas de registro e inicio de sesión SHALL mostrar los errores de valid
 
 #### Scenario: Mensajes traducidos por tipo de error
 - **WHEN** el servidor rechaza un campo por estar vacío, por formato de email, por longitud o por no coincidir la confirmación
-- **THEN** el mensaje bajo el campo es, respectivamente, "Falta rellenar <campo>.", "Introduce una dirección de email válida.", "<campo> debe tener al menos N caracteres." / "<campo> no puede superar los N caracteres.", o "Las contraseñas no coinciden."
+- **THEN** el mensaje bajo el campo es, respectivamente, "Falta rellenar <campo>.", "Introduce una dirección de email válida.", "<campo> debe tener al menos N caracteres." / "<campo> no puede superar los N caracteres.", o "Las contraseñas no coinciden.", donde <campo> es "el nombre", "el email", "la contraseña" o "la confirmación de la contraseña", en minúscula también al inicio de la frase
+
+#### Scenario: Error sobre un campo que no está en pantalla
+- **WHEN** el servidor rechaza un campo que la pantalla no muestra
+- **THEN** aparece un aviso sobre el formulario con el mensaje traducido del primer error devuelto por el servidor
 
 #### Scenario: Servidor inalcanzable
 - **WHEN** la persona envía un formulario y el servidor no responde
 - **THEN** aparece el aviso "No se pudo conectar con el servidor. Comprueba que el backend está arrancado." y el botón vuelve a estar disponible
 
-#### Scenario: Fallo interno del servidor
-- **WHEN** el servidor responde con un error no previsto
+#### Scenario: Error no previsto del servidor
+- **WHEN** el servidor responde con un error que no es de validación, de credenciales ni de sesión (por ejemplo, un fallo interno)
 - **THEN** aparece el aviso "Algo ha ido mal en el servidor. Inténtalo de nuevo en un momento."
 
 ### Requirement: Sesión persistente entre recargas
@@ -206,12 +214,16 @@ La aplicación web SHALL conservar la sesión iniciada al recargar o volver a ab
 - **THEN** ve un indicador de carga mientras se comprueba la sesión y después sigue dentro, sin volver a introducir credenciales
 
 #### Scenario: Sesión ya no válida
-- **WHEN** se abre la aplicación y el servidor rechaza la sesión guardada
+- **WHEN** se abre la aplicación por una dirección distinta de `/register` y el servidor rechaza la sesión guardada
 - **THEN** la persona acaba en la pantalla de inicio de sesión con el aviso "Tu sesión ha caducado. Vuelve a iniciar sesión.", y la sesión guardada se descarta
 
+#### Scenario: Sesión rechazada al abrir el registro
+- **WHEN** se abre directamente `/register` y el servidor rechaza la sesión guardada
+- **THEN** la persona se queda en la pantalla de registro, sin sesión y sin ningún aviso
+
 #### Scenario: Servidor caído al abrir
-- **WHEN** se abre la aplicación con una sesión guardada y el servidor no responde
-- **THEN** la persona ve la pantalla de inicio de sesión con el aviso de conexión, y si recarga cuando el servidor vuelve, recupera la sesión sin volver a introducir credenciales
+- **WHEN** se abre la aplicación por una dirección distinta de `/register` con una sesión guardada, y el servidor no responde o falla con un error distinto de sesión rechazada
+- **THEN** la persona ve la pantalla de inicio de sesión con el aviso correspondiente, y si recarga cuando el servidor vuelve a funcionar, recupera la sesión sin volver a introducir credenciales
 
 ### Requirement: Protección de pantallas
 La aplicación web SHALL mostrar el perfil solo con sesión iniciada, SHALL mostrar las pantallas de registro e inicio de sesión solo sin sesión, y SHALL llevar cualquier otra dirección al perfil.
@@ -237,14 +249,14 @@ La aplicación web SHALL mostrar en el perfil un círculo con las iniciales de l
 
 #### Scenario: Fecha de alta
 - **WHEN** la cuenta se creó el 13 de octubre de 2026
-- **THEN** el perfil muestra "Miembro desde" con "13 de octubre de 2026"
+- **THEN** el perfil muestra "Miembro desde" con "13 de octubre de 2026", según la zona horaria del navegador
 
 ### Requirement: Cierre de sesión desde la pantalla
 La aplicación web SHALL ofrecer en el perfil un botón "Cerrar sesión" que termina la sesión en el navegador y lleva a la pantalla de inicio de sesión, aunque el servidor no confirme el cierre.
 
 #### Scenario: Cerrar sesión
 - **WHEN** la persona pulsa "Cerrar sesión"
-- **THEN** llega a la pantalla de inicio de sesión sin ningún aviso, y al recargar sigue sin sesión
+- **THEN** el botón pasa a "Cerrando sesión…" y queda deshabilitado, la persona llega a la pantalla de inicio de sesión sin ningún aviso, y al recargar sigue sin sesión
 
 #### Scenario: Servidor caído al cerrar sesión
 - **WHEN** la persona pulsa "Cerrar sesión" y el servidor no responde
